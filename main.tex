@@ -1,0 +1,62 @@
+%ctexart/ctexbook/ctexrep: 这些是ctex 宏包提供的文档类，适用于排版中文文章、书籍和报告
+\documentclass[a4paper,UTF8]{ctexart}
+%newtxtext 是一个 LaTeX 宏包，用于提供一个新的 Times 字体风格，适用于文本排版。它是 newtx 宏包系列的一部分，提供了一套新的 Times 风格字体，包括正文字体、粗体、斜体等，以及一些调整，用于更好地支持中英文混排。
+%\usepackage{newtxtext}
+\usepackage[left=2.5cm, right= 2.5cm, top=3.0cm, bottom=3.2cm]{geometry}
+\usepackage[dvipsnames,svgnames]{xcolor}
+\usepackage[strict]{changepage} % 提供一个 adjustwidth 环境
+\usepackage{framed} % 实现方框效果
+\definecolor{formalshade}{rgb}{0.95,0.95,1} % 文本框颜色
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{titlesec}
+\titleformat{\section}[block]{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titlespacing*{\section}{0pt}{*3.5}{*1.5}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{listings}
+
+% ------------------******-------------------
+% 注意行末需要把空格注释掉，不然画出来的方框会有空白竖线
+\newenvironment{formal}{%
+\def\FrameCommand{%
+\hspace{1pt}%
+{\color{DarkBlue}\vrule width 2pt}%
+{\color{formalshade}\vrule width 4pt}%
+\colorbox{formalshade}%
+}%
+\MakeFramed{\advance\hsize-\width\FrameRestore}%
+\noindent\hspace{-4.55pt}% disable indenting first paragraph
+\begin{adjustwidth}{}{7pt}%
+\vspace{2pt}\vspace{2pt}%
+}
+{%
+\vspace{2pt}\end{adjustwidth}\endMakeFramed%
+}
+% ------------------******-------------------
+\begin{document}
+\section{c++仿函数}
+\begin{formal}
+C++中的仿函数（Functor）是一种特殊的对象，它可以像函数一样被调用，但实际上是一个类的实例。仿函数可以通过重载函数调用运算符 operator() 来实现，从而使得该对象可以像函数一样被调用。仿函数主要用于在算法中作为操作符使用，例如在STL（标准模板库）中的各种算法中。通过使用仿函数，可以将操作抽象出来，使得算法更加灵活，可以适用于不同的数据类型或者自定义的操作。
+\end{formal}
+\begin{lstlisting}[language=C++, caption=My C++ Code, label=lst:cpp]
+#include <iostream>
+
+// 定义一个加法仿函数
+class AddFunctor {
+public:
+    int operator()(int a, int b) {
+        return a + b;
+    }
+};
+
+int main() {
+    AddFunctor adder;  // 创建仿函数对象
+
+    int result = adder(3, 5);  // 使用仿函数调用
+    std::cout << "Result:" << result << std::endl;
+
+    return 0;
+}
+
+\end{lstlisting}
+
+\end{document}
