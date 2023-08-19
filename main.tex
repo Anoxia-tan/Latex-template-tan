@@ -14,6 +14,34 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
 
+\lstdefinestyle{customcpp}{
+	language=C++,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{blue},
+	commentstyle=\color{green!50!black},
+	stringstyle=\color{red},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	stepnumber=1,
+	numbersep=10pt,
+	backgroundcolor=\color{White!10},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	frame=single,
+	rulecolor=\color{White},
+	tabsize=4,
+	captionpos=b,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	escapeinside={(*}{*)},
+	morekeywords={constexpr, nullptr, int, double, void, cout, endl} % 添加自定义关键字
+}
+
+\lstset{style=customcpp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fancyhdr}
 % ------------------******-------------------
 % 注意行末需要把空格注释掉，不然画出来的方框会有空白竖线
 \newenvironment{formal}{%
@@ -32,31 +60,16 @@
 \vspace{2pt}\end{adjustwidth}\endMakeFramed%
 }
 % ------------------******-------------------
+
+ \usepackage{pdfpages}
+\usepackage{graphicx}
+
+%--------------------------------------------
 \begin{document}
-\section{c++仿函数}
-\begin{formal}
-C++中的仿函数（Functor）是一种特殊的对象，它可以像函数一样被调用，但实际上是一个类的实例。仿函数可以通过重载函数调用运算符 operator() 来实现，从而使得该对象可以像函数一样被调用。仿函数主要用于在算法中作为操作符使用，例如在STL（标准模板库）中的各种算法中。通过使用仿函数，可以将操作抽象出来，使得算法更加灵活，可以适用于不同的数据类型或者自定义的操作。
-\end{formal}
-\begin{lstlisting}[language=C++, caption=My C++ Code, label=lst:cpp]
-#include <iostream>
+\includepdf[pages=-]{figures/background.pdf} % 
+\setcounter{page}{1}%重置页码
+	
+\input{sections/what_is_algorithm.tex}
 
-// 定义一个加法仿函数
-class AddFunctor {
-public:
-    int operator()(int a, int b) {
-        return a + b;
-    }
-};
-
-int main() {
-    AddFunctor adder;  // 创建仿函数对象
-
-    int result = adder(3, 5);  // 使用仿函数调用
-    std::cout << "Result:" << result << std::endl;
-
-    return 0;
-}
-
-\end{lstlisting}
 
 \end{document}
