@@ -13,7 +13,8 @@
 \titlespacing*{\section}{0pt}{*3.5}{*1.5}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
-
+\usepackage{booktabs} % 导入三线表需要的宏包
+\usepackage{colortbl}
 \lstdefinestyle{customcpp}{
 	language=C++,
 	basicstyle=\small\ttfamily,
@@ -24,7 +25,7 @@
 	numberstyle=\tiny\color{gray},
 	stepnumber=1,
 	numbersep=10pt,
-	backgroundcolor=\color{White!10},
+	backgroundcolor=\color{gray!8},
 	showspaces=false,
 	showstringspaces=false,
 	showtabs=false,
@@ -66,10 +67,10 @@
 
 %--------------------------------------------
 \begin{document}
-\includepdf[pages=-]{figures/background.pdf} % 
+%\includepdf[pages=-]{figures/background.pdf} % 
+
 \setcounter{page}{1}%重置页码
 	
-\input{sections/what_is_algorithm.tex}
-
+\input{sections/how_to_use_doxygen.tex}
 
 \end{document}

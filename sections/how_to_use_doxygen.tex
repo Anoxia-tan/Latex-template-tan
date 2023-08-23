@@ -1,0 +1,149 @@
+\pagestyle{fancy}
+\rhead{}
+\lhead{}
+\chead{instructions for doxygen}
+\lfoot{}
+\cfoot{-\ \thepage \  -}
+\rfoot{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textbf{Doxygen}可以根据我们的代码注释生成我们需要的文档，这个文档明显比自己整理的要好看的多有结构的多，另外它还能生成每个文件的调用关系图、每个类的继承关系图、每个函数的调用关系图、每个文件夹的包含关系图……
+\section{项目注释}
+\qquad 项目注释块用于对项目进行描述，每个项目只出现一次，一般可以放在main.c主函数文件头部。对于其它类型的项目，置于定义项目入口函数的文件中。对于无入口函数的项目，比如静态库项目，置于较关键且不会被外部项目引用的文件中。
+\par 项目注释块以/** @mainpage开头，以*/结束。章节可自行添加。
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/**
+	* @mainpage  项目名
+	* @section   项目详细描述
+	* @section   功能描述  
+	* @section   用法描述 
+	* @section   固件更新 
+	*/
+\end{lstlisting}
+\section{文件注释}
+\qquad 一般在每一个文件开头加入版权、作者、时间等描述。
+文件注释描述了该文件的内容，如果一个文件只声明，或实现，或测试了一个对象，并且这个对象已经在它的声明处进行了详细的注释，那么就没必要再加上文件注释，除此之外的其他文件都需要文件注释。
+\begin{lstlisting}[language=C++, label=lst:cpp]
+    /**
+    * @file 文件名
+    * @brief 简介
+    * @details 细节
+    * @author 作者
+    * @version 版本号
+    * @date 年-月-日
+    * @copyright 版权
+    */
+\end{lstlisting}
+\section{类的注释}
+\qquad 每个类的定义都要附带一份注释， 描述类的功能和用法，除非它的功能相当明显。
+如果类的声明和定义分开了(例如分别放在了 .h 和 .cpp 文件中)。 此时，描述类用法的注释应当和接口定义放在一起，描述类的操作和实现的注释应当和实现放在一起。
+\begin{lstlisting}[language=C++, label=lst:cpp]
+    /**
+    * @brief 类的详细描述
+    */
+\end{lstlisting}
+\section{函数注释}
+\qquad 基本上每个函数声明处前都应当加上注释， 描述函数的功能和用途，对一些必要参数进行解释说明。只有在函数的功能简单而明显时才能省略这些注释(例如， 简单的取值和设值函数)
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/**
+	* @brief 函数描述
+	* @param 参数描述
+	* @return 返回描述
+	* @retval 返回值描述
+	*/
+\end{lstlisting}
+\section{常量/变量注释}
+\qquad 通常变量名本身足以很好说明变量用途，某些情况下， 也需要额外的注释说明。
+\subsection{常量/变量上一行注释} 
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/// ... 注释 ... 
+	变量
+	//! ... 注释 ... 
+	变量
+	/*! ... 注释 ... */
+	变量
+	/** ... 注释 ... */
+	变量
+\end{lstlisting}
+\subsection{常量/变量后注释}
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	变量 /*!< ... 注释 ... */
+	变量 /**< ... 注释 ...*/
+	变量 //!< ... 注释 ...
+	变量 ///< ... 注释 ...
+\end{lstlisting}
+\section{枚举类型注释}
+\qquad 枚举可看做类的一种特殊形式，添加简单说明，Doxygen会根据其后面的enum解析出枚举类型。
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/**
+	* @brief 简要说明
+	*
+	* @details 详细说明
+	*/
+	enum 枚举类型名
+	{
+		值1,/**< ...值1的注释... */
+		值2 /**< ...值2的注释... */
+	};
+\end{lstlisting}
+\section{宏注释}
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/**
+	* @brief 宏简要说明
+	* 
+	* @details 宏详细说明
+	*/
+	#define ... ...
+\end{lstlisting}
+\section{包含一段代码的注释}
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/// @code
+	要包含的代码内容
+	/// @endcode
+\end{lstlisting}
+\section{分组注释}
+\qquad 表明注释块是一组类、文件或名称空间的记录。这可以用于对类、文件或名称空间进行分类，并记录这些类别。还可以将组用作其他组的成员，从而构建组的层次结构。
+\begin{lstlisting}[language=C++, label=lst:cpp]
+	/*! \defgroup mygrp This is my group.
+	* 	这里为 mygrp 组添加记录
+	* 	@{
+		*/ 
+		
+		/*! A function */
+		void func()
+		{}
+		
+		/*! @} */
+\end{lstlisting}
+\section{特殊命令简介}
+\begin{center}
+	\begin{tabular}{|p{2cm}|p{5cm}|p{7cm}|} \hline % 其中，|c|表示文本居中，文本两边有竖直表线。
+		\rowcolor{formalshade}
+		\textbf{命令} & \textbf{说明} & \textbf{语法}  \\ \hline
+		@author & 作者 & author \{ list of authors \}\\ \hline
+		@brief &	简介&	brief \{ brief description \}\\ \hline
+		@bug & 缺陷，链接到所有缺陷汇总的缺陷列表 & bug\{ description\}\\ \hline
+		@copyright	&版权&	copyright \{ copyright description \}	\\ \hline
+		@code .. @endcode &在注释中开始说明一段代码，直到@endcode命令结束& \\ \hline
+		@date&	年-月-日 &	date \{ date description \}	 \\ \hline
+		@deprecated	& 弃用说明。可用于描述替代方案，预期寿命等 &	deprecated { description }	\\ \hline
+		@details &	细节 &	details \{ detailed description \}	\\ \hline
+		@file & 文件名 & file [< name >]  \\ \hline
+		@link &	连接(与@see类库，\{@link www.google.com\}) &	link < link-object>	\\ \hline
+		@mainpage & 主页信息 & mainpage [(title)]\\ \hline
+		@param &	参数&	param [(dir)] < parameter-name> \{ parameter description \}	\\ \hline
+		@pre &用来说明代码项的前提条件&pre \{ description of the precondition \} \\ \hline
+		@relates & 通常用做把非成员函数的注释文档包含在类的说明文档中 & relates [<name>] \\ \hline
+		@return	&描述返回意义	& return \{ description of the return value \}	\\ \hline
+		@retval	&描述返回值意义&	retval <return value> \{ description \}	\\ \hline
+		@see &	参考 &	see \{ references \}	\\ \hline
+		@since & 通常用来说明从什么版本、时间写此部分代码 & since\{ description \} \\ \hline
+		@throw &	异常描述 &	throw < exception-object> \{ exception description \}	\\ \hline
+		@todo &	待处理 &	todo \{ paragraph describing what is to be done \}	\\ \hline
+		@version	&版本号 &	version \{ version number \}	\\ \hline
+		@warning &	警告信息 &	warning \{ warning message \}	\\ \hline
+	\end{tabular}
+\end{center}
+\begin{flushright}
+	\fontsize{8pt}{5pt}
+	以上仅列出部分命令，详情请查看doxygen官方文档\\$https://www.doxygen.nl/manual/commands.html$
+\end{flushright}
